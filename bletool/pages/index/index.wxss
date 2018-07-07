@@ -1,0 +1,42 @@
+/**index.wxss**/
+
+.device{
+  display: block;
+  margin: 0 20rpx;
+}
+
+.discovery{
+  display: block;
+  margin: 0 20rpx;
+  text-align: right;
+}
+
+.list-item-line {
+  margin: 20rpx 0rpx;
+  height: 1rpx;
+  background: #888;
+}
+
+.device_list_item, .service_list_item, .characteristics_list {
+  margin: 20rpx 20rpx;
+}
+
+.item {
+  display: block;
+}
+
+.msg, .input{
+  display: block;
+  margin: 0 20rpx;
+}
+
+.button {
+  margin: 1rpx 20rpx;
+  width: 350rpx
+}
+
+.button1 {
+  margin: 1rpx 20rpx;
+}
+
+

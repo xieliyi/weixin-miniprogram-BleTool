@@ -1,0 +1,81 @@
+<!--index.wxml-->
+
+<view style="display:flex;flex-direction:row;">
+  <text style="width: 350rpx" class='device'>Device：{{available?connected?connectedName.length>0?connectedName:"已连接":"未连接":"不可用"}}</text>
+  <text style="width: 350rpx" class='discovery' bindtap='discoveryChange'>{{discovering?"Discovering":"Discovery"}}</text>
+</view>
+<text style="line-height: 35rpx;font-size: 30rpx;" class='msg'>{{msg}}</text>
+
+<view class='list_view' style='margin: 20rpx 0rpx;'>
+  <view class='device_list'>
+    <block wx:for="{{devices}}" wx:key="{{test}}">
+      <view class='device_list_item' id='{{item.deviceId}}' bindtap='connectTo'>
+        <view style="display:flex;flex-direction:row;">
+          <text class='item' style="width: 500rpx;">{{item.name.length>0?item.name:item.localName.length>0?"N/A "+item.localName:"N/A"}}</text>
+          <text class='item' style="width: 200rpx;text-align: right">{{item.RSSI}}dBm</text>
+        </view>
+        <text class='item'>{{item.deviceId}}</text>
+        <!--
+        <text class='item'>{{connectedDevicdId == item.deviceId?"已连接":"未连接"}}</text>
+        -->
+        <view class='list-item-line'></view>
+      </view>
+    </block>
+  </view>
+
+  <view class='service_list'>
+    <block wx:for="{{services}}" wx:key="{{test1}}">
+      <view class='service_list_item'  id='{{item.uuid}}' bindtap='selectService'>
+        <text class='item' style="font-size: 30rpx;">UUID：{{item.uuid}}</text>
+        <text class='item'>{{item.isPrimary?"PRIMARY SERVICE":""}}</text>
+        <view class='list-item-line'></view>
+      </view>
+    </block>
+  </view>
+
+  <view class='characteristics_list'>
+    <block wx:for="{{characteristics}}" wx:key="{{test2}}">
+      <view class='characteristics_list_item' id='{{item.uuid}}' bindtap='selectCharacteristic'>
+        <text class='item' style="font-size: 30rpx;">UUID：{{item.uuid}}</text>
+        <text class='item' space='true'>Properties： {{item.properties.read?"READ":"  "}}{{item.properties.write?"WRITE":"  "}}{{item.properties.notify?"NOTIFY":"  "}}{{item.properties.indicate?"INDICATE":"  "}}</text>
+        <view class='list-item-line'></view>
+      </view>
+    </block>
+  </view>
+</view>
+
+<view >
+  <view style="display:flex;flex-direction:row;">
+    <button type='primary' class='button' bindtap='bluetoothChange'>{{available?"关闭蓝牙":"打开蓝牙"}}</button>
+    <button type='primary' class='button' bindtap='getBluetoothState'>蓝牙状态</button>
+  </view>
+  <view style="display:flex;flex-direction:row;">
+    <button type='primary' class='button' bindtap='startDiscovery'>搜索设备</button>
+    <button type='primary' class='button' bindtap='stopDiscovery'>停止搜索</button>
+  </view>
+  <view style="display:flex;flex-direction:row;">
+    <button type='primary' class='button' bindtap='getServices'>获取服务</button>
+    <button type='primary' class='button' bindtap='getCharacteristics'>获取特征值</button>
+  </view>
+  <view style="display:flex;flex-direction:row;">
+    <button type='primary' class='button' bindtap='notifyEnable'>打开通知</button>
+    <button type='primary' class='button' bindtap='getDevices'>所有设备</button>
+  </view>
+  <view style="display:flex;flex-direction:row;">
+    <button type='primary' class='button' bindtap='readValue'>读取数据</button>
+    <button type='primary' class='button' bindtap='clearMsg'>清除屏幕</button> 
+  </view>
+</view>
+
+<button type='primary' class='button1' bindtap='connectionChange'>{{connected?"断开设备":"连接设备"}}</button>
+<view>
+  <checkbox-group bindchange="checkboxChange" style='margin: 0rpx 20rpx;'>
+    <label class="checkbox" wx:for="{{items}}" wx:key="{{checkboxKey}}">
+      <checkbox value="{{item.value}}" id="{{item.value}}" checked="{{item.checked}}"/>{{item.display}}
+    </label>
+  </checkbox-group>
+  <input class='input' bindinput='inputTextchange' bindconfirm='writeValue' placeholder="输入发送内容" style="height: 85rpx;" confirm-confirm-type='send' maxlength='{{items[0].checked?40:20}}' value='{{inputValue}}'/>
+</view>
+<button type='primary' class='button1' bindtap='writeValue'>发送数据</button>
+  
+
